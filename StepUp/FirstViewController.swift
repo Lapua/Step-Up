@@ -9,11 +9,11 @@
 import UIKit
 import SafariServices
 import Alamofire
-import SwiftyJSON
 
 class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var authURL: String?
+    var tableSource: [Lectures]?
     private var isLogin: Bool = false
     @IBOutlet weak var lectureTableView: UITableView!
     
@@ -28,27 +28,31 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        lectureTableView.rowHeight = CGFloat(44)
         lectureTableView.register(UINib(nibName: "LectureTableViewCell", bundle: nil), forCellReuseIdentifier: "LecCell")
-        getMyInfo()
+        Network.getMyInfo(self)
     }
     
-    private func getMyInfo() {
-        Alamofire.request("http://zipcloud.ibsnet.co.jp/api/search?zipcode=1850032").responseJSON { response in
-            if response.result.isSuccess {
-                if let responseValue = response.result.value {
-                    print(JSON(responseValue))
-                }
-            }
-        }
+    func setTableRows(_ lectures: [Lectures]) {
+        tableSource = lectures
+        lectureTableView.reloadData()
     }
     
     // tableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let count = tableSource?.count {
+            return count
+        }
         return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "LecCell") as? LectureTableViewCell {
+            if let lectures = tableSource {
+                let item = lectures[indexPath.row]
+                cell.setText(lectureName: item.lecture_name, roomName: item.room_name)
+                return cell
+            }
             cell.setText("Loading ...")
             return cell
         }

@@ -10,21 +10,28 @@ import UIKit
 
 class LectureTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var lectureName: UILabel!
+    @IBOutlet weak var roomName: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
+    func setText(lectureName lec: String, roomName room: String) {
+        lectureName.text = lec
+        roomName.text = room
+    }
+    
     func setText(_ text: String) {
-        label.text = text
+        lectureName.text = text
+        roomName.text = ""
     }
     
 }
