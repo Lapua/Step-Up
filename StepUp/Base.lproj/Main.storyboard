@@ -25,11 +25,19 @@
                                     <outlet property="delegate" destination="9pv-A4-QxB" id="u1b-7k-dWA"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F8M-Hz-eYt">
-                                <rect key="frame" x="184" y="115" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F8M-Hz-eYt">
+                                <rect key="frame" x="188" y="120" width="38" height="30"/>
+                                <state key="normal" title="Login"/>
                                 <connections>
-                                    <action selector="button:" destination="9pv-A4-QxB" eventType="touchUpInside" id="ee9-Tl-yA4"/>
+                                    <action selector="login:" destination="9pv-A4-QxB" eventType="touchUpInside" id="ee9-Tl-yA4"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="shG-DG-KT6">
+                                <rect key="frame" x="176" y="272" width="62" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="更新する"/>
+                                <connections>
+                                    <action selector="updateTable:" destination="9pv-A4-QxB" eventType="touchUpInside" id="tN8-a7-EH6"/>
                                 </connections>
                             </button>
                         </subviews>

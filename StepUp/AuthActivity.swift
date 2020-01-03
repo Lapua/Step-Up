@@ -11,7 +11,7 @@ import UIKit
 class AuthActivity: UIActivity {
     
     var url: String?
-    public var viewController: FirstViewController?
+    var viewController: FirstViewController?
     
     override func canPerform(withActivityItems activityItems: [Any]) -> Bool {
         for item in activityItems {
@@ -36,8 +36,16 @@ class AuthActivity: UIActivity {
     }
     
     override func perform() {
-        if let vc = viewController {
-            vc.authURL = url
+        if let url = url {
+            let comp = NSURLComponents(string: url)
+            let queryItem = comp?.queryItems
+            if let authTkt = queryItem?.first?.value {
+                Network.authTkt = authTkt
+            }
+        }
+        if let viewController = viewController {
+            viewController.setTableMessage("Loading ...")
+            Network.getMyInfo(viewController)
         }
     }
     

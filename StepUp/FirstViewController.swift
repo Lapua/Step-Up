@@ -12,13 +12,15 @@ import Alamofire
 
 class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var authURL: String?
+    var tableMessage: String = "Loading ..."
     var tableSource: [Lectures]?
-    private var isLogin: Bool = false
     @IBOutlet weak var lectureTableView: UITableView!
     
-    @IBAction func button(_ sender: UIButton) {
-        print(lectureTableView.numberOfRows(inSection: 0))
+    @IBAction func updateTable(_ sender: UIButton) {
+        Network.getMyInfo(self)
+    }
+    
+    @IBAction func login(_ sender: UIButton) {
         let url = URL(string: "https://service.cloud.teu.ac.jp/portal/index")!
         let vc = SFSafariViewController(url: url)
         vc.delegate = self
@@ -38,6 +40,11 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         lectureTableView.reloadData()
     }
     
+    func setTableMessage(_ message: String) {
+        tableMessage = message
+        lectureTableView.reloadData()
+    }
+    
     // tableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let count = tableSource?.count {
@@ -53,7 +60,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 cell.setText(lectureName: item.lecture_name, roomName: item.room_name)
                 return cell
             }
-            cell.setText("Loading ...")
+            cell.setText(tableMessage)
             return cell
         }
         return UITableViewCell()

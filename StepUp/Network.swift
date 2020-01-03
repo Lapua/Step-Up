@@ -9,24 +9,20 @@
 import Foundation
 import Alamofire
 
-struct Lectures: Codable {
-    var lecture_name: String
-    var url: String
-    var room_name: String
-}
-
-struct MyInfo: Codable {
-    var lectures: [Lectures]
-}
-
 class Network {
     
+    static var authTkt: String?
+    
     class func getMyInfo(_ viewController: FirstViewController) {
+        guard let authTkt = authTkt else {
+            viewController.setTableMessage("Loginしてください")
+            return
+        }
         let cookie = HTTPCookie(properties: [
             .domain: "service.cloud.teu.ac.jp",
             .path: "/eye/request/myinfo",
             .name: "auth_tkt",
-            .value: "MjExNDFmZDQ2NDFkODUzMmQ5NDU5YTI2NzdjNmQyZTE1ZTBkZjNmMjE4MzQ5ITE1Nzc5NzI3MjI=",
+            .value: authTkt,
             .secure: "FALSE",
             .expires: NSDate(timeIntervalSinceNow: 60 * 60 * 24)
         ])!
@@ -37,14 +33,28 @@ class Network {
             if let data = response.data {
                 do {
                     let myInfo: MyInfo = try JSONDecoder().decode(MyInfo.self, from: data)
-                    viewController.setTableRows(myInfo.lectures)
+                    if myInfo.lectures.count == 0 {
+                        viewController.setTableMessage("本日の講義はありません")
+                    } else {
+                        viewController.setTableRows(myInfo.lectures)
+                    }
                 } catch {
-                    print("Decode error")
+                    viewController.setTableMessage("ログインしてください")
                 }
             } else {
-                print(response.error ?? "error")
+                viewController.setTableMessage("エラー")
             }
         }
     }
     
+}
+
+struct Lectures: Codable {
+    var lecture_name: String
+    var url: String
+    var room_name: String
+}
+
+struct MyInfo: Codable {
+    var lectures: [Lectures]
 }
