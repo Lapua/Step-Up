@@ -10,14 +10,26 @@ import UIKit
 import SafariServices
 import Alamofire
 
-class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
-    var tableMessage: String = "Loading ..."
+    var tableMessage: String = "Welcome to StepUp"
     var tableSource: [Lectures]?
     @IBOutlet weak var lectureTableView: UITableView!
+    @IBOutlet weak var roomCode: UITextField!
+    @IBOutlet weak var seatCode: UITextField!
+    
+    @IBAction func tapScreen(_ sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+    }
+    
+    @IBAction func attend(_ sender: Any) {
+        if let room = roomCode.text, let seat = seatCode.text {
+            CSCNetwork.attend(roomCode: room, seatCode: seat)
+        }
+    }
     
     @IBAction func updateTable(_ sender: UIButton) {
-        Network.getMyInfo(self)
+        CSCNetwork.getMyInfo(self)
     }
     
     @IBAction func login(_ sender: UIButton) {
@@ -32,9 +44,20 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         // Do any additional setup after loading the view.
         lectureTableView.rowHeight = CGFloat(44)
         lectureTableView.register(UINib(nibName: "LectureTableViewCell", bundle: nil), forCellReuseIdentifier: "LecCell")
-        Network.getMyInfo(self)
+        roomCode.delegate = self
+        seatCode.delegate = self
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField.tag == 0 {
+            seatCode.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+    
+    // tableView
     func setTableRows(_ lectures: [Lectures]) {
         tableSource = lectures
         lectureTableView.reloadData()
@@ -45,7 +68,6 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         lectureTableView.reloadData()
     }
     
-    // tableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let count = tableSource?.count {
             return count

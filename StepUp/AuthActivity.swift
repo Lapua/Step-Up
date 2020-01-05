@@ -40,12 +40,12 @@ class AuthActivity: UIActivity {
             let comp = NSURLComponents(string: url)
             let queryItem = comp?.queryItems
             if let authTkt = queryItem?.first?.value {
-                Network.authTkt = authTkt
+                CSCNetwork.authTkt = authTkt
             }
         }
         if let viewController = viewController {
             viewController.setTableMessage("Loading ...")
-            Network.getMyInfo(viewController)
+            CSCNetwork.getMyInfo(viewController)
         }
     }
     

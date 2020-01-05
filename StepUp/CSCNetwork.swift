@@ -9,24 +9,29 @@
 import Foundation
 import Alamofire
 
-class Network {
+class CSCNetwork {
     
     static var authTkt: String?
     
-    class func getMyInfo(_ viewController: FirstViewController) {
-        guard let authTkt = authTkt else {
-            viewController.setTableMessage("Loginしてください")
-            return
-        }
+    class private func setCookie(_ auth: String) {
         let cookie = HTTPCookie(properties: [
             .domain: "service.cloud.teu.ac.jp",
             .path: "/eye/request/myinfo",
             .name: "auth_tkt",
-            .value: authTkt,
+            .value: auth,
             .secure: "FALSE",
             .expires: NSDate(timeIntervalSinceNow: 60 * 60 * 24)
         ])!
         Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookie(cookie)
+    }
+    
+    class func getMyInfo(_ viewController: FirstViewController) {
+        if let authTkt = authTkt {
+            setCookie(authTkt)
+        } else {
+            viewController.setTableMessage("Loginしてください")
+            return
+        }
         
 //        let url = "https://service.cloud.teu.ac.jp/eye/request/myinfo"
         // デモ用
@@ -45,6 +50,20 @@ class Network {
                 }
             } else {
                 viewController.setTableMessage("エラー")
+            }
+        }
+    }
+    
+    class func attend(roomCode: String, seatCode: String) {
+        if let authTkt = authTkt {
+            setCookie(authTkt)
+        } else {
+            return
+        }
+        let url = "https://service.cloud.teu.ac.jp/eye/m/" + roomCode + "/" + seatCode
+        Alamofire.request(url).response { response in
+            if let error = response.error {
+                print("Error :", error)
             }
         }
     }
