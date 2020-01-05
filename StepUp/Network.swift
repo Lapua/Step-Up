@@ -28,8 +28,10 @@ class Network {
         ])!
         Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookie(cookie)
         
-//        Alamofire.request("https://service.cloud.teu.ac.jp/eye/request/myinfo").response { response in
-        Alamofire.request("http://safe-shelf-38481.herokuapp.com/api").response { response in
+//        let url = "https://service.cloud.teu.ac.jp/eye/request/myinfo"
+        // デモ用
+        let url = "http://safe-shelf-38481.herokuapp.com/api"
+        Alamofire.request(url).response { response in
             if let data = response.data {
                 do {
                     let myInfo: MyInfo = try JSONDecoder().decode(MyInfo.self, from: data)
