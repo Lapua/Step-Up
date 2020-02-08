@@ -12,6 +12,7 @@ import Alamofire
 
 class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
+    private let PORTAL_URL: String = "https://service.cloud.teu.ac.jp/portal/index"
     var tableMessage: String = "Welcome to StepUp"
     var tableSource: [Lectures]?
     @IBOutlet weak var lectureTableView: UITableView!
@@ -33,7 +34,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     @IBAction func login(_ sender: UIButton) {
-        let url = URL(string: "https://service.cloud.teu.ac.jp/portal/index")!
+        let url = URL(string: PORTAL_URL)!
         let vc = SFSafariViewController(url: url)
         vc.delegate = self
         present(vc, animated: true, completion: nil)
@@ -93,7 +94,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
 extension FirstViewController: SFSafariViewControllerDelegate {
     
     func safariViewController(_ controller: SFSafariViewController, activityItemsFor URL: URL, title: String?) -> [UIActivity] {
-        if URL.absoluteString.hasPrefix("https://service.cloud.teu.ac.jp/portal/index?auth_tkt=") {
+        if URL.absoluteString.hasPrefix(self.PORTAL_URL + "?auth_tkt=") {
             let authActivity = AuthActivity() as AuthActivity
             authActivity.viewController = self
             return [authActivity]
