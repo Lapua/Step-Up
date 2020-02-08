@@ -18,7 +18,6 @@
 		3DE93ED023BB388800C5845E /* LectureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE93ECE23BB388800C5845E /* LectureTableViewCell.swift */; };
 		3DE93ED123BB388800C5845E /* LectureTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DE93ECF23BB388800C5845E /* LectureTableViewCell.xib */; };
 		3DE93ED323BD8BF500C5845E /* CSCNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE93ED223BD8BF500C5845E /* CSCNetwork.swift */; };
-		3DE93ED523C23B6900C5845E /* BusNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE93ED423C23B6900C5845E /* BusNetwork.swift */; };
 		E5EC117B0243EA2A90DEBA4C /* Pods_StepUp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF04BFB2DBC1E8F843E8B4D5 /* Pods_StepUp.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,7 +36,6 @@
 		3DE93ECE23BB388800C5845E /* LectureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureTableViewCell.swift; sourceTree = "<group>"; };
 		3DE93ECF23BB388800C5845E /* LectureTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LectureTableViewCell.xib; sourceTree = "<group>"; };
 		3DE93ED223BD8BF500C5845E /* CSCNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSCNetwork.swift; sourceTree = "<group>"; };
-		3DE93ED423C23B6900C5845E /* BusNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusNetwork.swift; sourceTree = "<group>"; };
 		7D2D508BE2E668C4B7C3A2BA /* Pods-StepUp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StepUp.release.xcconfig"; path = "Target Support Files/Pods-StepUp/Pods-StepUp.release.xcconfig"; sourceTree = "<group>"; };
 		AF04BFB2DBC1E8F843E8B4D5 /* Pods_StepUp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StepUp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -84,7 +82,6 @@
 			isa = PBXGroup;
 			children = (
 				3DA3142523B8860B00714C2E /* AppDelegate.swift */,
-				3DE93ED423C23B6900C5845E /* BusNetwork.swift */,
 				3DE93ED223BD8BF500C5845E /* CSCNetwork.swift */,
 				3DA3142723B8860B00714C2E /* SceneDelegate.swift */,
 				3DA3142923B8860B00714C2E /* FirstViewController.swift */,
@@ -232,7 +229,6 @@
 				3DE93ED023BB388800C5845E /* LectureTableViewCell.swift in Sources */,
 				3DE93ED323BD8BF500C5845E /* CSCNetwork.swift in Sources */,
 				3DA3142823B8860B00714C2E /* SceneDelegate.swift in Sources */,
-				3DE93ED523C23B6900C5845E /* BusNetwork.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

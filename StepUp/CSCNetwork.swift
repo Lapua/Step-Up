@@ -12,6 +12,8 @@ import Alamofire
 class CSCNetwork {
     
     static var authTkt: String?
+    private static let INFO_URL: String = "https://service.cloud.teu.ac.jp/eye/request/myinfo"
+    private static let ATTEND_URL: String = "https://service.cloud.teu.ac.jp/eye/m/"
     
     class private func setCookie(_ auth: String) {
         let cookie = HTTPCookie(properties: [
@@ -32,11 +34,9 @@ class CSCNetwork {
             viewController.setTableMessage("Loginしてください")
             return
         }
-        
-//        let url = "https://service.cloud.teu.ac.jp/eye/request/myinfo"
         // デモ用
-        let url = "http://safe-shelf-38481.herokuapp.com/api"
-        Alamofire.request(url).response { response in
+//        let url = "http://safe-shelf-38481.herokuapp.com/api"
+        Alamofire.request(INFO_URL).response { response in
             if let data = response.data {
                 do {
                     let myInfo: MyInfo = try JSONDecoder().decode(MyInfo.self, from: data)
@@ -60,7 +60,7 @@ class CSCNetwork {
         } else {
             return
         }
-        let url = "https://service.cloud.teu.ac.jp/eye/m/" + roomCode + "/" + seatCode
+        let url = ATTEND_URL + roomCode + "/" + seatCode
         Alamofire.request(url).response { response in
             if let error = response.error {
                 print("Error :", error)
