@@ -20,6 +20,8 @@ APIをリクエストするにはトークンが必要なため、Safariでロ�
 
 - SFSafariViewController, UIActicity - Safariを起動し、共有ボタンの処理をする。
 
+- protocol, delegateの定義と実装
+
 ## まだやるべきこと
 
 - test codeを書く
