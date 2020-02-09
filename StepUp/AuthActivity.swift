@@ -12,6 +12,7 @@ class AuthActivity: UIActivity {
     
     var url: String?
     var viewController: FirstViewController?
+    var delegate: tableDataDelegate?
     
     override func canPerform(withActivityItems activityItems: [Any]) -> Bool {
         for item in activityItems {
@@ -43,10 +44,8 @@ class AuthActivity: UIActivity {
                 CSCNetwork.authTkt = authTkt
             }
         }
-        if let viewController = viewController {
-            viewController.setTableMessage("Loading ...")
-            CSCNetwork.getMyInfo(viewController)
-        }
+        self.delegate?.setTableMessage("Loading ...")
+        self.delegate?.getMyInfo()
     }
     
 }

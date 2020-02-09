@@ -10,11 +10,13 @@ import UIKit
 import SafariServices
 import Alamofire
 
-class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, tableDataDelegate {
     
     private let PORTAL_URL: String = "https://service.cloud.teu.ac.jp/portal/index"
     var tableMessage: String = "Welcome to StepUp"
     var tableSource: [Lectures]?
+    let cscNet = CSCNetwork()
+    
     @IBOutlet weak var lectureTableView: UITableView!
     @IBOutlet weak var roomCode: UITextField!
     @IBOutlet weak var seatCode: UITextField!
@@ -25,12 +27,12 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @IBAction func attend(_ sender: Any) {
         if let room = roomCode.text, let seat = seatCode.text {
-            CSCNetwork.attend(roomCode: room, seatCode: seat)
+            cscNet.attend(roomCode: room, seatCode: seat)
         }
     }
     
     @IBAction func updateTable(_ sender: UIButton) {
-        CSCNetwork.getMyInfo(self)
+        getMyInfo()
     }
     
     @IBAction func login(_ sender: UIButton) {
@@ -47,6 +49,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         lectureTableView.register(UINib(nibName: "LectureTableViewCell", bundle: nil), forCellReuseIdentifier: "LecCell")
         roomCode.delegate = self
         seatCode.delegate = self
+        cscNet.delegate = self
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -56,6 +59,10 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             textField.resignFirstResponder()
         }
         return true
+    }
+    
+    func getMyInfo() {
+        cscNet.getMyInfo(self)
     }
     
     // tableView
@@ -96,7 +103,7 @@ extension FirstViewController: SFSafariViewControllerDelegate {
     func safariViewController(_ controller: SFSafariViewController, activityItemsFor URL: URL, title: String?) -> [UIActivity] {
         if URL.absoluteString.hasPrefix(self.PORTAL_URL + "?auth_tkt=") {
             let authActivity = AuthActivity() as AuthActivity
-            authActivity.viewController = self
+            authActivity.delegate = self
             return [authActivity]
         }
         return []
@@ -106,4 +113,10 @@ extension FirstViewController: SFSafariViewControllerDelegate {
         return [.addToReadingList]
     }
     
+}
+
+protocol tableDataDelegate {
+    func getMyInfo()
+    func setTableRows(_ lectures: [Lectures])
+    func setTableMessage(_ message: String)
 }
